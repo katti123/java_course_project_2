@@ -1,0 +1,17 @@
+*/bin/
+
+
+**/.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+
+*/.settings/
+*/.classpath
+**/.recommenders
+*/.project
+
+
