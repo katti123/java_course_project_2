@@ -2,20 +2,24 @@ package design;
 
 public class U2 extends Rocket
 {
-	private static int cargoLimit=29;
+	int maxrocketWeightWithcargo=29;
 	private static int  rocketWeight=18;
-	private static int cargoCarried=cargoLimit-rocketWeight;
+     int cargoCarried=maxrocketWeightWithcargo-rocketWeight;
 
+     public U2()
+     {
+    	 setMaxWeightLimit(maxrocketWeightWithcargo);
+     }
 	public boolean launch()
 	{
-		float explosionChance = 4%(cargoCarried / cargoLimit);
+		float explosionChance = 4%(cargoCarried / maxrocketWeightWithcargo);
 		System.out.println(explosionChance);
 		return true;
 	}
 	
 	public boolean land()
 	{
-		float crashingChance = 8% (cargoCarried  / cargoLimit );
+		float crashingChance = 8% (cargoCarried  / maxrocketWeightWithcargo );
 		System.out.println(crashingChance);
 		return true;
 	}

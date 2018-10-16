@@ -42,17 +42,21 @@ public class Simulation {
 	  {
 		U1Rockets=new ArrayList<>();
 		for(Item h:getItems) {
-		U1 r1=new U1();
+		Rocket r1=new U1();
+	
 		if(r1.canCarry(h))
 		{
-			U1Rockets.add( r1);
-			
+			U1Rockets.add(r1);
+		
+			System.out.println("added");
 		}
 		else
 		{
 			U1 newr1=new U1();
 			U1Rockets.add(newr1);
+			
 		}
+		System.out.println("Send a new one");
 		}
 
 		return U1Rockets;
@@ -62,18 +66,20 @@ public class Simulation {
 	{
 		
 		U2Rockets=new ArrayList<>();
-		System.out.println(U2Rockets);
+		
 			
 		for(Item h:getItems) {
-		U2 r2=new U2();
+		Rocket r2=new U2();
 		if(r2.canCarry(h))
 		{
 			U2Rockets.add(r2);
+			System.out.println("added");
 		}
 		else
 		{
 			U2 newr2=new U2();
 			U2Rockets.add(newr2);
+			//System.out.println("Send a new one");
 		}
 		}
 		
@@ -105,7 +111,10 @@ public class Simulation {
 		 ArrayList<Item> secondPhase=simulate.loadItems(phase2);
 		 
 		 ArrayList<Rocket> U1RocketsListFirstPhase=simulate.loadU1(firstPhase);
-		 ArrayList<Rocket>  U2RocketsListSecondPhase=simulate.loadU2(secondPhase);
+		 ArrayList<Rocket> U1RocketsListSecondPhase=simulate.loadU1(secondPhase);
+		 
+		 ArrayList<Rocket> U2RocketsListFirstPhase=simulate.loadU2(firstPhase);
+		 ArrayList<Rocket> U2RocketsListSecondPhase=simulate.loadU2(secondPhase);
 		 
 		 
 			

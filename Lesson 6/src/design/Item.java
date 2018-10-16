@@ -2,8 +2,8 @@ package design;
 
 public class Item {
 
-	private String name;
-	private int weight;
+	 String name;
+	 int weight;
 	
 	public Item(String name,int weight)
 	{
