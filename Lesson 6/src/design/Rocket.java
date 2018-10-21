@@ -2,9 +2,12 @@ package design;
 
 public  class Rocket implements Spaceship{
 
-	private int currentRocketWeight;
-	int maxWeightLimit;
+   public int currentRocketWeight;
+    public int cost;
+	 int maxWeightLimit;
+	 int maxWeight;
 	
+	int rocketWeight;
 
 	@Override
 	public boolean launch() {
@@ -24,18 +27,21 @@ public  class Rocket implements Spaceship{
 		// TODO Auto-generated method stub
 		this.currentRocketWeight+=item.weight;
 		return this.currentRocketWeight;
+		
 	}
 
 	@Override
 	public boolean canCarry(Item item) {
 		// TODO Auto-generated method stub
+		maxWeight=item.weight+currentRocketWeight;
 		
-		if((item.weight+currentRocketWeight)>maxWeightLimit)
+		if(maxWeight>maxWeightLimit)
 		{
 			
 		return false;
 		
 		}
+		
 		return true;
 	}
 

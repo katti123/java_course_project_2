@@ -3,7 +3,6 @@ package simulation;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import design.Item;
@@ -13,8 +12,9 @@ import design.U2;
 
 public class Simulation {
 	
-	static ArrayList<Rocket> U1Rockets;
-	static ArrayList<Rocket> U2Rockets;
+	
+		int rocketCount=0;
+	
 	
 	public ArrayList<Item> loadItems(String file) throws FileNotFoundException
 	{
@@ -32,93 +32,140 @@ public class Simulation {
 			
 			
 		}
-		
+		System.out.println(file +" contains " + items.size() + " items");
 		return items;
 	
 	}
 
 	public ArrayList<Rocket> loadU1 (ArrayList<Item> getItems)
 	
-	  {
-		U1Rockets=new ArrayList<>();
-		for(Item h:getItems) {
+	  {  
+		
+		ArrayList<Rocket> U1Rockets=new ArrayList<>();
 		Rocket r1=new U1();
+		for(Item h:getItems) 
+		{
 	
 		if(r1.canCarry(h))
 		{
-			U1Rockets.add(r1);
-		
-			System.out.println("added");
+			
+			r1.carry(h);
+				
+
 		}
 		else
 		{
-			U1 newr1=new U1();
-			U1Rockets.add(newr1);
-			
+		 
+			U1Rockets.add(r1);
+	     	r1=new U1();
+		   r1.carry(h);
 		}
-		System.out.println("Send a new one");
-		}
-
+		
+		}	
+		U1Rockets.add(r1);
+		
 		return U1Rockets;
 	}
 	
 	public ArrayList<Rocket> loadU2 (ArrayList <Item> getItems)
 	{
 		
-		U2Rockets=new ArrayList<>();
-		
+		ArrayList<Rocket> 	U2Rockets=new ArrayList<>();
+		Rocket r2=new U2();
 			
 		for(Item h:getItems) {
-		Rocket r2=new U2();
-		if(r2.canCarry(h))
-		{
+		
+			if(r2.canCarry(h))
+			{
+				
+				r2.carry(h);
+					
+
+			}
+			else
+			{
+			 
+				U2Rockets.add(r2);
+		     	r2=new U1();
+			   r2.carry(h);
+			}
+			
+			}	
 			U2Rockets.add(r2);
-			System.out.println("added");
-		}
-		else
-		{
-			U2 newr2=new U2();
-			U2Rockets.add(newr2);
-			//System.out.println("Send a new one");
-		}
-		}
 		
 	return U2Rockets;
 
 		}
-	public float runSimulation(ArrayList <Rocket> rockets)
+	public int runSimulation(ArrayList <Rocket> rockets)
 	
 	{
+		int noOfRocketsExtra=0;
+		int rocketSuccess=1;
+		
 		for(Rocket a1:rockets)
 		{
-			if(a1.launch()|| a1.land()== false)
+			while(a1.launch()== false)  
 			{
 				a1.launch();
-				
-			}		
+				noOfRocketsExtra++;
+				//System.out.println(" Extra rockets needed : " +  noOfRockets );
+
+			}
+			//System.out.println(rocketSuccess + " rockets was successfully launched");
 			
+      while(a1.land()==false)
+		{    a1.launch();
+			noOfRocketsExtra++;
+			//System.out.println("Extra rockets needed : " + noOfRockets );
+				}
+	
 		}
-		
-		return 0;
+		rocketSuccess++;
+		//System.out.println(rocketSuccess + " rockets was successfully landed");
+		int budget =rockets.get(0).cost* (rockets.size()+noOfRocketsExtra);
+		System.out.println(rockets.size() + " rockets and " + noOfRocketsExtra + " extra rockets needed = "
+                + (rockets.size() + noOfRocketsExtra) + " in total");
+	
+		return budget;
 		
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		String phase1="/home/veena/Desktop/phase1.txt";
-		String phase2="/home/veena/Desktop/phase2.txt";
+		String phase1="phase1.txt";
+		String phase2="phase2.txt";
 		Simulation simulate=new Simulation();
 		 ArrayList<Item> firstPhase=simulate.loadItems(phase1);
 		 ArrayList<Item> secondPhase=simulate.loadItems(phase2);
 		 
 		 ArrayList<Rocket> U1RocketsListFirstPhase=simulate.loadU1(firstPhase);
+			
+			
 		 ArrayList<Rocket> U1RocketsListSecondPhase=simulate.loadU1(secondPhase);
+		 System.out.println("\nFleet of U1 contains " +  (U1RocketsListFirstPhase.size()+U1RocketsListSecondPhase.size())+ " rockets");
+		
 		 
-		 ArrayList<Rocket> U2RocketsListFirstPhase=simulate.loadU2(firstPhase);
-		 ArrayList<Rocket> U2RocketsListSecondPhase=simulate.loadU2(secondPhase);
+		 
+	     int budgetForPhase1U1 =simulate.runSimulation(U1RocketsListFirstPhase);
+	 	System.out.println("Total budget for U1 rockets for phase 1 : "  + budgetForPhase1U1 +  " (in millions) ");
+	 	 int budgetForPhase2U1=  simulate.runSimulation(U1RocketsListSecondPhase);
+		  System.out.println("Total budget for U1 rockets for phase 2 : "  + budgetForPhase2U1 +  " (in millions) ");
+		  System.out.println("Total budget for U1 rockets : " + (budgetForPhase1U1+budgetForPhase2U1) + "(in millions)" );
 		 
 		 
 			
-				
+		  ArrayList<Rocket> U2RocketsListFirstPhase=simulate.loadU2(firstPhase);
+			
+			
+			 ArrayList<Rocket> U2RocketsListSecondPhase=simulate.loadU2(secondPhase);
+			 System.out.println("\nFleet of U2 contains " +  (U2RocketsListFirstPhase.size()+U2RocketsListSecondPhase.size())+ " rockets");
+			
+			 
+			 
+		     int budgetForPhase1U2 =simulate.runSimulation(U2RocketsListFirstPhase);
+		 	System.out.println("Total budget for U2 rockets for phase 1 : "  + budgetForPhase1U2 +  " (in millions) ");
+		 	 int budgetForPhase2U2=  simulate.runSimulation(U2RocketsListSecondPhase);
+			  System.out.println("Total budget for U2 rockets for phase 2 : "  + budgetForPhase2U2 +  " (in millions) ");
+			  System.out.println("Total budget for U2 rockets : " + (budgetForPhase1U2+budgetForPhase2U2) + "(in millions)" );
 		
 	}
 	
