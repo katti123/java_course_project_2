@@ -28,7 +28,6 @@ public class Simulation {
 
 
 		}
-		System.out.println(file +" contains " + items.size() + " items");
 		return items;
 
 	}
@@ -104,33 +103,37 @@ public class Simulation {
 
 		for(Rocket a1:rockets)
 		{
+			
 			while(a1.launch()== false)  
 			{
 				rocketsExploded++;
-				System.out.println(rocketsExploded + " rockets were exploded");
 				a1.launch();
 
-				//System.out.println(" Extra rockets needed : " +  noOfRockets );
-
+				
 			}
-			rocketSuccess++;
-
-
-			while(a1.land()==false)
+			
+             while(a1.land()==false)
 			{    
-
+				
 				a1.launch();
 				rocketsCrashed++;
-				System.out.println(rocketsCrashed + " rockets were crashed");
-				//System.out.println("Extra rockets needed : " + noOfRockets );
+				
+								
 			}
-			System.out.println(rocketSuccess + " rockets were successfully launched and landed");
+             
+             if(a1.land()&& a1.launch()==true)
+             {
+            	 rocketSuccess++;
+            	
+             }
+            
+             
 		}
-
-		//System.out.println(rocketSuccess + " rockets was successfully landed");
-		int budget =rockets.get(0).cost* ( rockets.size()+rocketsExploded+rocketsCrashed);
-		System.out.println("So "+ rockets.size() + " rockets and " + (rocketsExploded + rocketsCrashed )+ " extra rockets needed = "
-				+ (rockets.size() + rocketsExploded + rocketsCrashed) + " in total");
+		System.out.println(rocketsExploded + " rockets were exploded"+ "," + rocketsCrashed + " rockets were crashed");
+    	 System.out.println( rocketSuccess + " rockets were successfully launched and landed"); 
+		int budget =rockets.get(0).cost* ( rocketSuccess+rocketsExploded+rocketsCrashed);
+		System.out.println("So "+ rocketSuccess + " rockets and " + (rocketsExploded + rocketsCrashed )+ " extra rockets needed = "
+				+ (rocketSuccess + rocketsExploded + rocketsCrashed) + " in total");
 
 		return budget;
 
@@ -149,12 +152,12 @@ public class Simulation {
 		System.out.println("\nFleet of U1 contains " +  (U1RocketsListFirstPhase.size()+U1RocketsListSecondPhase.size())+ " rockets");
 		System.out.println("For phase 1 : ");
 		int budgetForPhase1U1 =simulate.runSimulation(U1RocketsListFirstPhase);
-		System.out.println("Total budget for U1 rockets for phase 1 : "  + budgetForPhase1U1 +  " (in millions) ");
+		System.out.println("Total budget for U1 rockets for phase 1 : "  + budgetForPhase1U1 +  "$(in millions) ");
 
 		System.out.println("For phase 2 : ");
 		int budgetForPhase2U1=  simulate.runSimulation(U1RocketsListSecondPhase);
-		System.out.println("Total budget for U1 rockets for phase 2 : "  + budgetForPhase2U1 +  " (in millions) ");
-		System.out.println("Total budget for U1 rockets : " + (budgetForPhase1U1+budgetForPhase2U1) + "(in millions)" );
+		System.out.println("Total budget for U1 rockets for phase 2 : "  + budgetForPhase2U1 +  "$(in millions) ");
+		System.out.println("Total budget for U1 rockets : " + (budgetForPhase1U1+budgetForPhase2U1) + "$(in millions)" );
 
 		
 		ArrayList<Rocket> U2RocketsListFirstPhase=simulate.loadU2(firstPhase);
@@ -163,12 +166,12 @@ public class Simulation {
 		System.out.println("\nFleet of U2 contains " +  (U2RocketsListFirstPhase.size()+U2RocketsListSecondPhase.size())+ " rockets");
 		System.out.println("For phase 1 : ");
 		int budgetForPhase1U2 =simulate.runSimulation(U2RocketsListFirstPhase);
-		System.out.println("Total budget for U2 rockets for phase 1 : "  + budgetForPhase1U2 +  " (in millions) ");
+		System.out.println("Total budget for U2 rockets for phase 1 : "  + budgetForPhase1U2 +  "$(in millions) ");
 		
 		System.out.println("For phase 2 : ");
 		int budgetForPhase2U2=  simulate.runSimulation(U2RocketsListSecondPhase);
-		System.out.println("Total budget for U2 rockets for phase 2 : "  + budgetForPhase2U2 +  " (in millions) ");
-		System.out.println("Total budget for U2 rockets : " + (budgetForPhase1U2+budgetForPhase2U2) + "(in millions)" );
+		System.out.println("Total budget for U2 rockets for phase 2 : "  + budgetForPhase2U2 +  "$(in millions) ");
+		System.out.println("Total budget for U2 rockets : " + (budgetForPhase1U2+budgetForPhase2U2) + "$(in millions)" );
 
 	}
 
