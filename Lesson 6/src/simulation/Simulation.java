@@ -25,9 +25,11 @@ public class Simulation {
 
 			Item i=new Item(lineSplit[0], Integer.valueOf(lineSplit[1]));
 			items.add(i);
+			
 
 
 		}
+
 		return items;
 
 	}
@@ -130,7 +132,7 @@ public class Simulation {
              
 		}
 		System.out.println(rocketsExploded + " rockets were exploded"+ "," + rocketsCrashed + " rockets were crashed");
-    	 System.out.println( rocketSuccess + " rockets were successfully launched and landed"); 
+    	System.out.println( rocketSuccess + " rockets were successfully launched and landed"); 
 		int budget =rockets.get(0).cost* ( rocketSuccess+rocketsExploded+rocketsCrashed);
 		System.out.println("So "+ rocketSuccess + " rockets and " + (rocketsExploded + rocketsCrashed )+ " extra rockets needed = "
 				+ (rocketSuccess + rocketsExploded + rocketsCrashed) + " in total");

@@ -5,7 +5,7 @@ public  class Rocket implements Spaceship{
 	public int currentRocketWeight;
 	public int cost;
 	int maxWeightLimit;
-	int maxWeight;
+	
 
 	int rocketWeight;
 
@@ -33,9 +33,8 @@ public  class Rocket implements Spaceship{
 	@Override
 	public boolean canCarry(Item item) {
 		// TODO Auto-generated method stub
-		maxWeight=item.weight+currentRocketWeight;
 
-		if(maxWeight>maxWeightLimit)
+		if(item.weight+currentRocketWeight>maxWeightLimit)
 		{
 
 			return false;
