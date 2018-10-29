@@ -8,10 +8,10 @@ public class U1 extends Rocket{
 
 
 	public U1() {
-		maxWeightLimit=18000;
+		maxRocketWeight=18000;
 		rocketWeight=10000;
 		cost=100;
-
+		this.currentRocketWeight=this.rocketWeight;
 
 	}	
 	@Override
@@ -19,9 +19,7 @@ public class U1 extends Rocket{
 	{
 
 		int randNo = (int)(Math.random() * 101);	
-		//	System.out.println(randNo);
-		double explosionChance = 5.0 *(currentRocketWeight-rocketWeight)/(maxWeightLimit-rocketWeight);
-		//System.out.println(explosionChance);
+		double explosionChance = 5.0 *(currentRocketWeight-rocketWeight)/(maxRocketWeight-rocketWeight);
 		if(explosionChance>randNo)
 		{	
 
@@ -38,7 +36,7 @@ public class U1 extends Rocket{
 	public boolean land()
 	{
 		int randNo = (int)(Math.random() * 101);
-		double crashingChance = 1.0 *(currentRocketWeight-rocketWeight)/(maxWeightLimit-rocketWeight);
+		double crashingChance = 1.0 *(currentRocketWeight-rocketWeight)/(maxRocketWeight-rocketWeight);
 		if(crashingChance>randNo)	
 		{
 
