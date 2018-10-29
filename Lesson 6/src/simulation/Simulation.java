@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import design.Item;
 import design.Rocket;
 import design.U1;
 import design.U2;
 
 public class Simulation {
-
 	public ArrayList<Item> loadItems(String file) throws FileNotFoundException
 	{
 		ArrayList<Item> items=new ArrayList<>();
@@ -25,9 +23,6 @@ public class Simulation {
 
 			Item i=new Item(lineSplit[0], Integer.valueOf(lineSplit[1]));
 			items.add(i);
-			
-
-
 		}
 
 		return items;
@@ -35,49 +30,50 @@ public class Simulation {
 	}
 
 	public ArrayList<Rocket> loadU1 (ArrayList<Item> getItems)
-
 	{  
-
 		ArrayList<Rocket> list_rocketsU1=new ArrayList<>();
-		Rocket r1=new U1();
-		for(Item h:getItems) 
+
+		U1 r1=new U1();
+		list_rocketsU1.add(r1);
+
+		for(Item item:getItems) 
 		{
 
-			if(r1.canCarry(h))
+			if(r1.canCarry(item))
 			{
 
-				
-				r1.carry(h);
+				r1.carry(item);
 
 
 			}
 			else
+
 			{
 
+				r1 = new U1();
 				list_rocketsU1.add(r1);
-				r1=new U1();
-				
-				
+				r1.carry(item);		
 			}
 
+
 		}	
-		list_rocketsU1.add(r1);
 
 		return list_rocketsU1;
+
 	}
 
 	public ArrayList<Rocket> loadU2 (ArrayList <Item> getItems)
 	{
 
-		ArrayList<Rocket> 	list_rocketsU2=new ArrayList<>();
+		ArrayList<Rocket> list_rocketsU2=new ArrayList<>();
 		Rocket r2=new U2();
 
-		for(Item h:getItems) {
+		for(Item item:getItems) {
 
-			if(r2.canCarry(h))
+			if(r2.canCarry(item))
 			{
-				//list_rocketsU2.add(r2);
-				r2.carry(h);
+
+				r2.carry(item);
 
 
 			}
@@ -85,9 +81,9 @@ public class Simulation {
 			{
 
 				list_rocketsU2.add(r2);
-				r2=new U1();
-			
-				
+				r2=new U2();
+				r2.carry(item);
+
 			}
 
 		}	
@@ -97,45 +93,28 @@ public class Simulation {
 
 	}
 	public int runSimulation(ArrayList <Rocket> rockets)
-
 	{
-		int rocketsExploded=0;
+		//int rocketsExploded=0;
 		int  rocketSuccess=0;
 		int rocketsCrashed=0;
 
 		for(Rocket a1:rockets)
 		{
-			
-			while(a1.launch()== false)  
-			{
-				rocketsExploded++;
-				a1.launch();
 
-				
-			}
-			
-             while(a1.land()==false)
-			{    
-				
-				a1.launch();
+			while(!a1.launch() || !a1.land())  
+			{
 				rocketsCrashed++;
-				
-								
+
 			}
-             
-             if(a1.land()&& a1.launch()==true)
-             {
-            	 rocketSuccess++;
-            	
-             }
-            
-             
+			rocketSuccess++;
+
+
 		}
-		System.out.println(rocketsExploded + " rockets were exploded"+ "," + rocketsCrashed + " rockets were crashed");
-    	System.out.println( rocketSuccess + " rockets were successfully launched and landed"); 
-		int budget =rockets.get(0).cost* ( rocketSuccess+rocketsExploded+rocketsCrashed);
-		System.out.println("So "+ rocketSuccess + " rockets and " + (rocketsExploded + rocketsCrashed )+ " extra rockets needed = "
-				+ (rocketSuccess + rocketsExploded + rocketsCrashed) + " in total");
+		//	System.out.println(rocketsExploded + " rockets were exploded"+ "," + rocketsCrashed + " rockets were crashed");
+		System.out.println( rocketSuccess + " rockets were successfully launched and landed"); 
+		int budget =rockets.get(0).cost* ( rocketSuccess+rocketsCrashed);
+		System.out.println("So "+ rocketSuccess + " rockets and " + (+ rocketsCrashed )+ " extra rockets needed = "
+				+ (rocketSuccess  + rocketsCrashed) + " in total");
 
 		return budget;
 
@@ -150,30 +129,33 @@ public class Simulation {
 
 		ArrayList<Rocket> U1RocketsListFirstPhase=simulate.loadU1(firstPhase);
 		ArrayList<Rocket> U1RocketsListSecondPhase=simulate.loadU1(secondPhase);
-		
-		System.out.println("\nFleet of U1 contains " +  (U1RocketsListFirstPhase.size()+U1RocketsListSecondPhase.size())+ " rockets");
-		System.out.println("For phase 1 : ");
+
+		System.out.println("\n U1 fleet for Phase 1 contains " +  U1RocketsListFirstPhase.size()+ " rockets");
+		System.out.println("\n U1 fleet for Phase 2 contains " +  U1RocketsListSecondPhase.size()+ " rockets");
+		//System.out.println("For phase 1 : ");
 		int budgetForPhase1U1 =simulate.runSimulation(U1RocketsListFirstPhase);
 		System.out.println("Total budget for U1 rockets for phase 1 : "  + budgetForPhase1U1 +  "$(in millions) ");
 
-		System.out.println("For phase 2 : ");
-		int budgetForPhase2U1=  simulate.runSimulation(U1RocketsListSecondPhase);
-		System.out.println("Total budget for U1 rockets for phase 2 : "  + budgetForPhase2U1 +  "$(in millions) ");
-		System.out.println("Total budget for U1 rockets : " + (budgetForPhase1U1+budgetForPhase2U1) + "$(in millions)" );
+		//		System.out.println("For phase 2 : ");
+		//		int budgetForPhase2U1=  simulate.runSimulation(U1RocketsListSecondPhase);
+		//System.out.println("Total budget for U1 rockets for phase 2 : "  + budgetForPhase2U1 +  "$(in millions) ");
+		//System.out.println("Total budget for U1 rockets : " + (budgetForPhase1U1+budgetForPhase2U1) + "$(in millions)" );
 
-		
+
 		ArrayList<Rocket> U2RocketsListFirstPhase=simulate.loadU2(firstPhase);
 		ArrayList<Rocket> U2RocketsListSecondPhase=simulate.loadU2(secondPhase);
-		
-		System.out.println("\nFleet of U2 contains " +  (U2RocketsListFirstPhase.size()+U2RocketsListSecondPhase.size())+ " rockets");
-		System.out.println("For phase 1 : ");
-		int budgetForPhase1U2 =simulate.runSimulation(U2RocketsListFirstPhase);
-		System.out.println("Total budget for U2 rockets for phase 1 : "  + budgetForPhase1U2 +  "$(in millions) ");
-		
-		System.out.println("For phase 2 : ");
-		int budgetForPhase2U2=  simulate.runSimulation(U2RocketsListSecondPhase);
-		System.out.println("Total budget for U2 rockets for phase 2 : "  + budgetForPhase2U2 +  "$(in millions) ");
-		System.out.println("Total budget for U2 rockets : " + (budgetForPhase1U2+budgetForPhase2U2) + "$(in millions)" );
+
+		System.out.println("\n U2 fleet for Phase 1 contains " +  U2RocketsListFirstPhase.size()+ " rockets");
+		System.out.println("\n U2 fleet for Phase 2 contains " +  U2RocketsListSecondPhase.size()+ " rockets");	
+		//	System.out.println("\nFleet of U2 contains " +  (U2RocketsListFirstPhase.size()+U2RocketsListSecondPhase.size())+ " rockets");
+		//		System.out.println("For phase 1 : ");
+		//		int budgetForPhase1U2 =simulate.runSimulation(U2RocketsListFirstPhase);
+		//		System.out.println("Total budget for U2 rockets for phase 1 : "  + budgetForPhase1U2 +  "$(in millions) ");
+		//		
+		//		System.out.println("For phase 2 : ");
+		//		int budgetForPhase2U2=  simulate.runSimulation(U2RocketsListSecondPhase);
+		//		System.out.println("Total budget for U2 rockets for phase 2 : "  + budgetForPhase2U2 +  "$(in millions) ");
+		//		System.out.println("Total budget for U2 rockets : " + (budgetForPhase1U2+budgetForPhase2U2) + "$(in millions)" );
 
 	}
 
