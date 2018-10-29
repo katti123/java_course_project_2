@@ -1,4 +1,5 @@
+Space-Challenge
+Final project for Udacity's Object Oriented Programming in Java course.
 
-# java_course_project_2
 
 
